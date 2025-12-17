@@ -6,8 +6,16 @@ export default async function handler(req, res) {
 
   const data = await getSheetData();
 
-  const oldOven = data.find(r => r["Model Number"] === oldModel);
-  const newOven = data.find(r => r["Model Number"] === newModel);
+const normalize = v => String(v || "").trim().toUpperCase();
+
+const oldOven = data.find(
+  r => normalize(r["Model Number"]) === normalize(oldModel)
+);
+
+const newOven = data.find(
+  r => normalize(r["Model Number"]) === normalize(newModel)
+);
+
 
   if (!oldOven || !newOven) {
     return res.json({
