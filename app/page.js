@@ -15,7 +15,10 @@ export default function Home() {
     const res = await fetch("/api/compare", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ oldModel, newModel })
+      body: JSON.stringify({
+        oldModel,
+        newModel
+      })
     });
 
     const data = await res.json();
@@ -63,6 +66,32 @@ export default function Home() {
             <h2>{result.verdict}</h2>
             <p>{result.summary}</p>
           </div>
+
+          {result.modifications?.length > 0 && (
+            <>
+              <h3>Required Modifications</h3>
+              <ul>
+                {result.modifications.map((m, i) => (
+                  <li key={i}>{m}</li>
+                ))}
+              </ul>
+            </>
+          )}
+
+          {result.sources?.length > 0 && (
+            <>
+              <h3>Sources</h3>
+              <ul>
+                {result.sources.map((s, i) => (
+                  <li key={i}>
+                    <a href={s} target="_blank" rel="noreferrer">
+                      {s}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
         </>
       )}
     </main>
