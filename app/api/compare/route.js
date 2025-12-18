@@ -42,13 +42,29 @@ export async function POST(req) {
     mods.push("Electrical circuit upgrade required.");
   }
 
-  return NextResponse.json({
-    verdict,
-    summary: "Comparison based on manufacturer installation specifications.",
-    modifications: mods,
-    sources: [
-      oldOven["Spec Source URL"],
-      newOven["Spec Source URL"]
-    ]
-  });
+ return NextResponse.json({
+  verdict,
+  summary: "Comparison based on manufacturer installation specifications.",
+
+  comparison: {
+    "Cut-Out Width (in)": {
+      old: `${oldOven["Cutout Width Min (in)"]} to ${oldOven["Cutout Width Max (in)"]}`,
+      new: `${newOven["Cutout Width Min (in)"]} to ${newOven["Cutout Width Max (in)"]}`
+    },
+    "Cut-Out Height (in)": {
+      old: oldOven["Cutout Height Min (in)"],
+      new: newOven["Cutout Height Min (in)"]
+    },
+    "Cut-Out Depth (in)": {
+      old: oldOven["Cutout Depth Min (in)"],
+      new: newOven["Cutout Depth Min (in)"]
+    }
+  },
+
+  modifications: mods,
+  sources: [
+    oldOven["Spec Source URL"],
+    newOven["Spec Source URL"]
+  ]
+});
 }
