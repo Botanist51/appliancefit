@@ -71,6 +71,18 @@ export default function Home() {
             <p>{result.summary}</p>
           </div>
 
+<pre
+  style={{
+    background: "#f4f4f4",
+    padding: 10,
+    marginTop: 20,
+    fontSize: 12,
+    overflowX: "auto"
+  }}
+>
+  {JSON.stringify(result, null, 2)}
+</pre>
+
        {result.comparison && (
   <>
     <h3 style={{ marginTop: 30 }}>Cut-Out Dimension Comparison</h3>
