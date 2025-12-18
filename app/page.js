@@ -67,6 +67,37 @@ export default function Home() {
             <p>{result.summary}</p>
           </div>
 
+       {result.comparison && (
+  <>
+    <h3 style={{ marginTop: 30 }}>Cut-Out Dimension Comparison</h3>
+
+    <table
+      style={{
+        width: "100%",
+        borderCollapse: "collapse",
+        marginTop: 10
+      }}
+    >
+      <thead>
+        <tr>
+          <th style={th}>Dimension</th>
+          <th style={th}>Existing</th>
+          <th style={th}>Replacement</th>
+        </tr>
+      </thead>
+      <tbody>
+        {Object.entries(result.comparison).map(([label, values]) => (
+          <tr key={label}>
+            <td style={td}>{label}</td>
+            <td style={td}>{values.old}</td>
+            <td style={td}>{values.new}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </>
+)}
+
           {result.modifications?.length > 0 && (
             <>
               <h3>Required Modifications</h3>
@@ -97,5 +128,16 @@ export default function Home() {
     </main>
   );
 }
+const th = {
+  border: "1px solid #ccc",
+  padding: "8px",
+  background: "#f4f4f4",
+  textAlign: "left"
+};
+
+const td = {
+  border: "1px solid #ccc",
+  padding: "8px"
+};
 
 export const dynamic = "force-dynamic";
