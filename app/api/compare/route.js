@@ -7,6 +7,15 @@ export async function POST(req) {
   const data = await getSheetData();
 
   const normalize = v => String(v || "").trim().toUpperCase();
+const num = v => {
+  const n = Number(v);
+  return Number.isFinite(n) ? n : null;
+};
+
+const fmt = n => {
+  if (n === null) return "";
+  return String(Number(n.toFixed(4)));
+};
 
   const oldOven = data.find(
     r => normalize(r["Model Number"]) === normalize(oldModel)
@@ -46,20 +55,43 @@ export async function POST(req) {
   verdict,
   summary: "Comparison based on manufacturer installation specifications.",
 
-  comparison: {
-    "Cut-Out Width (in)": {
-      old: `${oldOven["Cutout Width Min (in)"]} to ${oldOven["Cutout Width Max (in)"]}`,
-      new: `${newOven["Cutout Width Min (in)"]} to ${newOven["Cutout Width Max (in)"]}`
-    },
-    "Cut-Out Height (in)": {
-      old: oldOven["Cutout Height Min (in)"],
-      new: newOven["Cutout Height Min (in)"]
-    },
-    "Cut-Out Depth (in)": {
-      old: oldOven["Cutout Depth Min (in)"],
-      new: newOven["Cutout Depth Min (in)"]
-    }
-  },
+ comparison: {
+  "Cut-Out Width (in)": (() => {
+    const oldMax = num(oldOven["Cutout Width Max (in)"]);
+    const newMin = num(newOven["Cutout Width Min (in)"]);
+    const diff = oldMax !== null && newMin !== null ? newMin - oldMax : null;
+
+    return {
+      old: `${fmt(oldOven["Cutout Width Min (in)"])} to ${fmt(oldOven["Cutout Width Max (in)"])}`,
+      new: `${fmt(newOven["Cutout Width Min (in)"])} to ${fmt(newOven["Cutout Width Max (in)"])}`,
+      diff: diff === null ? "" : fmt(diff)
+    };
+  })(),
+
+  "Cut-Out Height (in)": (() => {
+    const oldMax = num(oldOven["Cutout Height Max (in)"]);
+    const newMin = num(newOven["Cutout Height Min (in)"]);
+    const diff = oldMax !== null && newMin !== null ? newMin - oldMax : null;
+
+    return {
+      old: fmt(oldOven["Cutout Height Min (in)"]),
+      new: fmt(newOven["Cutout Height Min (in)"]),
+      diff: diff === null ? "" : fmt(diff)
+    };
+  })(),
+
+  "Cut-Out Depth (in)": (() => {
+    const oldMin = num(oldOven["Cutout Depth Min (in)"]);
+    const newMin = num(newOven["Cutout Depth Min (in)"]);
+    const diff = oldMin !== null && newMin !== null ? newMin - oldMin : null;
+
+    return {
+      old: fmt(oldOven["Cutout Depth Min (in)"]),
+      new: fmt(newOven["Cutout Depth Min (in)"]),
+      diff: diff === null ? "" : fmt(diff)
+    };
+  })()
+},
 
   modifications: mods,
   sources: [
