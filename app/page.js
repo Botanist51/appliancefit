@@ -88,11 +88,16 @@ export default function Home() {
       </thead>
       <tbody>
         {Object.entries(result.comparison).map(([label, values]) => (
-          <tr key={label}>
-            <td style={td}>{label}</td>
-            <td style={td}>{values.old}</td>
-            <td style={td}>{values.new}</td>
-          </tr>
+         <tr key={label}>
+  <td style={td}>{label}</td>
+  <td style={td}>{values.old}</td>
+  <td style={td}>{values.new}</td>
+  <td style={td}>
+    {values.diff !== ""
+      ? `${values.diff} in`
+      : ""}
+  </td>
+</tr>
         ))}
       </tbody>
     </table>
