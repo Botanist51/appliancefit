@@ -81,10 +81,11 @@ export default function Home() {
     >
       <thead>
         <tr>
-          <th style={th}>Dimension</th>
-          <th style={th}>Existing</th>
-          <th style={th}>Replacement</th>
-        </tr>
+  <th style={th}>Dimension</th>
+  <th style={th}>Existing</th>
+  <th style={th}>Replacement</th>
+  <th style={th}>Difference</th>
+</tr>
       </thead>
       <tbody>
         {Object.entries(result.comparison).map(([label, values]) => (
