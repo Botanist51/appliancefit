@@ -67,6 +67,16 @@ export default function Home() {
             <h2>{result.verdict}</h2>
             <p>{result.summary}</p>
           </div>
+{result.installImpact && (
+  <>
+    <h3 style={{ marginTop: 30 }}>Install Impact Summary</h3>
+    <ul>
+      {result.installImpact.map((item, i) => (
+        <li key={i}>{item}</li>
+      ))}
+    </ul>
+  </>
+)}
 
       {result.charts?.map(chart => (
   <div key={chart.id} style={{ marginTop: 30 }}>
