@@ -16,6 +16,7 @@ const fmt = n => {
   if (n === null) return "";
   return String(Number(n.toFixed(4)));
 };
+const safe = v => (v === undefined || v === null || v === "" ? "N/A" : v);
 
   const oldOven = data.find(
     r => normalize(r["Model Number"]) === normalize(oldModel)
@@ -51,52 +52,75 @@ const fmt = n => {
     mods.push("Electrical circuit upgrade required.");
   }
 
- return NextResponse.json({
+return NextResponse.json({
   verdict,
   summary: "Comparison based on manufacturer installation specifications.",
 
- comparison: {
-  "Cut-Out Width (in)": (() => {
-    const oldMax = num(oldOven["Cutout Width Max (in)"]);
-    const newMin = num(newOven["Cutout Width Min (in)"]);
-    const diff = oldMax !== null && newMin !== null ? newMin - oldMax : null;
+  charts: [
+    {
+      id: "cutout",
+      title: "Cut-Out Dimensions",
+      rows: [
+        {
+          label: "Width (in)",
+          old: `${fmt(oldOven["Cutout Width Min (in)"])} to ${fmt(oldOven["Cutout Width Max (in)"])}`,
+          new: `${fmt(newOven["Cutout Width Min (in)"])} to ${fmt(newOven["Cutout Width Max (in)"])}`,
+          diff: fmt(
+            num(newOven["Cutout Width Min (in)"]) -
+            num(oldOven["Cutout Width Max (in)"])
+          )
+        },
+        {
+          label: "Height (in)",
+          old: fmt(oldOven["Cutout Height Max (in)"]),
+          new: fmt(newOven["Cutout Height Min (in)"]),
+          diff: fmt(
+            num(newOven["Cutout Height Min (in)"]) -
+            num(oldOven["Cutout Height Max (in)"])
+          )
+        },
+        {
+          label: "Depth (in)",
+          old: fmt(oldOven["Cutout Depth Min (in)"]),
+          new: fmt(newOven["Cutout Depth Min (in)"]),
+          diff: fmt(
+            num(newOven["Cutout Depth Min (in)"]) -
+            num(oldOven["Cutout Depth Min (in)"])
+          )
+        }
+      ]
+    },
 
-    return {
-      old: `${fmt(oldOven["Cutout Width Min (in)"])} to ${fmt(oldOven["Cutout Width Max (in)"])}`,
-      new: `${fmt(newOven["Cutout Width Min (in)"])} to ${fmt(newOven["Cutout Width Max (in)"])}`,
-      diff: diff === null ? "" : fmt(diff)
-    };
-  })(),
-
-  "Cut-Out Height (in)": (() => {
-    const oldMax = num(oldOven["Cutout Height Max (in)"]);
-    const newMin = num(newOven["Cutout Height Min (in)"]);
-    const diff = oldMax !== null && newMin !== null ? newMin - oldMax : null;
-
-    return {
-      old: fmt(oldOven["Cutout Height Min (in)"]),
-      new: fmt(newOven["Cutout Height Min (in)"]),
-      diff: diff === null ? "" : fmt(diff)
-    };
-  })(),
-
-  "Cut-Out Depth (in)": (() => {
-    const oldMin = num(oldOven["Cutout Depth Min (in)"]);
-    const newMin = num(newOven["Cutout Depth Min (in)"]);
-    const diff = oldMin !== null && newMin !== null ? newMin - oldMin : null;
-
-    return {
-      old: fmt(oldOven["Cutout Depth Min (in)"]),
-      new: fmt(newOven["Cutout Depth Min (in)"]),
-      diff: diff === null ? "" : fmt(diff)
-    };
-  })()
-},
+    {
+      id: "electrical",
+      title: "Electrical",
+      rows: [
+        {
+          label: "Voltage",
+          old: safe(oldOven["Voltage"]),
+          new: safe(newOven["Voltage"]),
+          diff: "N/A"
+        },
+        {
+          label: "Amperage (A)",
+          old: safe(oldOven["Amperage (A)"]),
+          new: safe(newOven["Amperage (A)"]),
+          diff:
+            oldOven["Amperage (A)"] && newOven["Amperage (A)"]
+              ? fmt(
+                  num(newOven["Amperage (A)"]) -
+                  num(oldOven["Amperage (A)"])
+                )
+              : "N/A"
+        }
+      ]
+    }
+  ],
 
   modifications: mods,
   sources: [
-    oldOven["Spec Source URL"],
-    newOven["Spec Source URL"]
+    safe(oldOven["Spec Source URL"]),
+    safe(newOven["Spec Source URL"])
   ]
 });
 }
