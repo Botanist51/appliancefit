@@ -114,6 +114,62 @@ return NextResponse.json({
               : "N/A"
         }
       ]
+    },
+        {
+      id: "ventilation",
+      title: "Ventilation",
+      rows: [
+        {
+          label: "Ventilation Type",
+          old: safe(oldOven["Ventilation Type"]),
+          new: safe(newOven["Ventilation Type"]),
+          diff: "N/A"
+        },
+        {
+          label: "Minimum CFM",
+          old: safe(oldOven["Ventilation Min CFM"]),
+          new: safe(newOven["Ventilation Min CFM"]),
+          diff:
+            oldOven["Ventilation Min CFM"] && newOven["Ventilation Min CFM"]
+              ? fmt(
+                  num(newOven["Ventilation Min CFM"]) -
+                  num(oldOven["Ventilation Min CFM"])
+                )
+              : "N/A"
+        },
+        {
+          label: "Recommended CFM",
+          old: safe(oldOven["Ventilation Recommended CFM"]),
+          new: safe(newOven["Ventilation Recommended CFM"]),
+          diff:
+            oldOven["Ventilation Recommended CFM"] &&
+            newOven["Ventilation Recommended CFM"]
+              ? fmt(
+                  num(newOven["Ventilation Recommended CFM"]) -
+                  num(oldOven["Ventilation Recommended CFM"])
+                )
+              : "N/A"
+        },
+        {
+          label: "Duct Diameter (in)",
+          old: safe(oldOven["Ventilation Duct Diameter (in)"]),
+          new: safe(newOven["Ventilation Duct Diameter (in)"]),
+          diff:
+            oldOven["Ventilation Duct Diameter (in)"] &&
+            newOven["Ventilation Duct Diameter (in)"]
+              ? fmt(
+                  num(newOven["Ventilation Duct Diameter (in)"]) -
+                  num(oldOven["Ventilation Duct Diameter (in)"])
+                )
+              : "N/A"
+        },
+        {
+          label: "Recirculating Allowed",
+          old: safe(oldOven["Ventilation Recirculating Allowed"]),
+          new: safe(newOven["Ventilation Recirculating Allowed"]),
+          diff: "N/A"
+        }
+      ]
     }
   ],
 
