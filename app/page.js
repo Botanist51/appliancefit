@@ -25,6 +25,25 @@ export default function Home() {
     setResult(data);
     setLoading(false);
   }
+  const pageStyle = {
+    padding: 40,
+    maxWidth: 1100,
+    margin: "0 auto",
+    fontFamily: "Inter, system-ui, -apple-system, sans-serif",
+    color: "#111827"
+  };
+
+  const sectionTitle = {
+    marginTop: 48,
+    marginBottom: 12,
+    fontSize: 20,
+    fontWeight: 600
+  };
+
+  const mutedText = {
+    color: "#6b7280",
+    fontSize: 14
+  };
 
   return (
     <main style={{ padding: 30, maxWidth: 900, margin: "auto", fontFamily: "Arial" }}>
