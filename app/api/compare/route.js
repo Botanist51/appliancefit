@@ -51,10 +51,49 @@ const safe = v => (v === undefined || v === null || v === "" ? "N/A" : v);
     if (verdict !== "Not Compatible") verdict = "Modifications Required";
     mods.push("Electrical circuit upgrade required.");
   }
+const installImpact = [];
+
+// --- Cut-out impacts ---
+const heightDelta =
+  num(newOven["Cutout Height Min (in)"]) -
+  num(oldOven["Cutout Height Max (in)"]);
+
+if (heightDelta > 0) {
+  installImpact.push(
+    `Cabinet opening height must be increased by ${fmt(heightDelta)} in.`
+  );
+}
+
+const depthDelta =
+  num(newOven["Cutout Depth Min (in)"]) -
+  num(oldOven["Cutout Depth Min (in)"]);
+
+if (depthDelta > 0) {
+  installImpact.push(
+    `Cabinet depth or rear clearance must be increased by ${fmt(depthDelta)} in.`
+  );
+}
+
+// --- Electrical impacts ---
+const ampDelta =
+  num(newOven["Amperage (A)"]) -
+  num(oldOven["Amperage (A)"]);
+
+if (ampDelta > 0) {
+  installImpact.push(
+    `Electrical service must be upgraded from ${oldOven["Amperage (A)"]}A to ${newOven["Amperage (A)"]}A.`
+  );
+}
+
+// --- Fallback ---
+if (installImpact.length === 0) {
+  installImpact.push("No installation modifications are required.");
+}
 
 return NextResponse.json({
   verdict,
   summary: "Comparison based on manufacturer installation specifications.",
+  installImpact,
 
   charts: [
     {
