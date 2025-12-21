@@ -194,6 +194,30 @@ return NextResponse.json({
           diff: "N/A"
         }
       ]
+    },
+        {
+      id: "plumbing",
+      title: "Plumbing",
+      rows: [
+        {
+          label: "Water Supply Required",
+          old: safe(oldOven["Water Supply Required"]),
+          new: safe(newOven["Water Supply Required"]),
+          diff: "N/A"
+        },
+        {
+          label: "Water Line Size",
+          old: safe(oldOven["Water Line Size"]),
+          new: safe(newOven["Water Line Size"]),
+          diff: "N/A"
+        },
+        {
+          label: "Drain Required",
+          old: safe(oldOven["Drain Required"]),
+          new: safe(newOven["Drain Required"]),
+          diff: "N/A"
+        }
+      ]
     }
   ],
 
