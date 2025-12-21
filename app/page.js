@@ -68,9 +68,9 @@ export default function Home() {
             <p>{result.summary}</p>
           </div>
 
-       {result.comparison && (
-  <>
-    <h3 style={{ marginTop: 30 }}>Cut-Out Dimension Comparison</h3>
+      {result.charts?.map(chart => (
+  <div key={chart.id} style={{ marginTop: 30 }}>
+    <h3>{chart.title}</h3>
 
     <table
       style={{
@@ -81,29 +81,27 @@ export default function Home() {
     >
       <thead>
         <tr>
-  <th style={th}>Dimension</th>
-  <th style={th}>Existing</th>
-  <th style={th}>Replacement</th>
-  <th style={th}>Difference</th>
-</tr>
+          <th style={th}>Parameter</th>
+          <th style={th}>Existing</th>
+          <th style={th}>Replacement</th>
+          <th style={th}>Difference</th>
+        </tr>
       </thead>
       <tbody>
-        {Object.entries(result.comparison).map(([label, values]) => (
-         <tr key={label}>
-  <td style={td}>{label}</td>
-  <td style={td}>{values.old}</td>
-  <td style={td}>{values.new}</td>
-  <td style={td}>
-    {values.diff !== ""
-      ? `${values.diff} in`
-      : ""}
-  </td>
-</tr>
+        {chart.rows.map(row => (
+          <tr key={row.label}>
+            <td style={td}>{row.label}</td>
+            <td style={td}>{row.old}</td>
+            <td style={td}>{row.new}</td>
+            <td style={td}>
+              {row.diff !== "" ? `${row.diff}` : "N/A"}
+            </td>
+          </tr>
         ))}
       </tbody>
     </table>
-  </>
-)}
+  </div>
+))}
 
           {result.modifications?.length > 0 && (
             <>
