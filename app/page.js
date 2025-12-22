@@ -34,11 +34,12 @@ export default function Home() {
   };
 
   const sectionTitle = {
-    marginTop: 48,
-    marginBottom: 12,
-    fontSize: 20,
-    fontWeight: 600
-  };
+  marginTop: 48,
+  marginBottom: 12,
+  fontSize: 18,
+  fontWeight: 700,
+  letterSpacing: "-0.01em"
+};
 
   const mutedText = {
     color: "#6b7280",
@@ -50,10 +51,10 @@ export default function Home() {
 
      <h1
   style={{
-    fontSize: 36,
-    fontWeight: 700,
-    marginBottom: 4,
-    letterSpacing: "-0.02em"
+    fontSize: 38,
+    fontWeight: 800,
+    marginBottom: 2,
+    letterSpacing: "-0.03em"
   }}
 >
   ApplianceFit
@@ -61,11 +62,11 @@ export default function Home() {
 
 <p
   style={{
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: 500,
     marginTop: 4,
-    marginBottom: 20,
-    color: "#111827"
+    marginBottom: 28,
+    color: "#374151"
   }}
 >
   Appliance Installation Compatibility Check
@@ -164,14 +165,34 @@ export default function Home() {
 </div>
 
 {result.installImpact && (
-  <>
-    <h3 style={{ marginTop: 30 }}>Install Impact Summary</h3>
-    <ul>
+  <div
+    style={{
+      marginTop: 40,
+      padding: 20,
+      borderRadius: 8,
+      border: "1px solid #e5e7eb",
+      background: "#ffffff"
+    }}
+  >
+    <h3 style={{ ...sectionTitle, marginTop: 0 }}>
+      Install Impact Summary
+    </h3>
+
+    <ul style={{ marginTop: 8, paddingLeft: 18 }}>
       {result.installImpact.map((item, i) => (
-        <li key={i}>{item}</li>
+        <li
+          key={i}
+          style={{
+            marginBottom: 6,
+            fontSize: 14,
+            color: "#111827"
+          }}
+        >
+          {item}
+        </li>
       ))}
     </ul>
-  </>
+  </div>
 )}
 
       {result.charts?.map(chart => (
