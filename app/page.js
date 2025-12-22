@@ -116,49 +116,6 @@ export default function Home() {
     </ul>
   </>
 )}
-{result.costEstimate && (
-  <>
-    <h3 style={{ marginTop: 30 }}>Estimated Installation Cost</h3>
-
-    <div
-      style={{
-        padding: 15,
-        border: "1px solid #ccc",
-        borderRadius: 6,
-        background: "#f9f9f9",
-        maxWidth: 500
-      }}
-    >
-      <p>
-        <strong>Most installs fall between:</strong>{" "}
-        {result.costEstimate.mostLikelyRange}
-      </p>
-
-      <p>
-        <strong>Full estimated range:</strong>{" "}
-        {result.costEstimate.fullRange}
-      </p>
-
-      <p>
-        <strong>Installation risk level:</strong>{" "}
-        {result.costEstimate.riskLevel}
-      </p>
-
-      {result.costEstimate.drivers?.length > 0 && (
-        <>
-          <p>
-            <strong>Primary cost drivers:</strong>
-          </p>
-          <ul>
-            {result.costEstimate.drivers.map((d, i) => (
-              <li key={i}>{d}</li>
-            ))}
-          </ul>
-        </>
-      )}
-    </div>
-  </>
-)}
 
       {result.charts?.map(chart => (
   <div key={chart.id} style={{ marginTop: 30 }}>
