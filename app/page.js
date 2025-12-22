@@ -35,10 +35,12 @@ export default function Home() {
 
   const sectionTitle = {
   marginTop: 48,
-  marginBottom: 12,
-  fontSize: 18,
+  marginBottom: 14,
+  fontSize: 16,
   fontWeight: 700,
-  letterSpacing: "-0.01em"
+  letterSpacing: "0.04em",
+  textTransform: "uppercase",
+  color: "#374151"
 };
 
   const mutedText = {
@@ -49,12 +51,13 @@ export default function Home() {
   return (
     <main style={pageStyle}>
 
-     <h1
+    <h1
   style={{
-    fontSize: 38,
-    fontWeight: 800,
+    fontSize: 42,
+    fontWeight: 900,
     marginBottom: 2,
-    letterSpacing: "-0.03em"
+    letterSpacing: "-0.04em",
+    color: "#0f172a"
   }}
 >
   ApplianceFit
@@ -66,7 +69,7 @@ export default function Home() {
     fontWeight: 500,
     marginTop: 4,
     marginBottom: 28,
-    color: "#374151"
+  color: "#4b5563"
   }}
 >
   Appliance Installation Compatibility Check
