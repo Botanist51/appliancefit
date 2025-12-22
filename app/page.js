@@ -48,8 +48,20 @@ export default function Home() {
   return (
     <main style={pageStyle}>
 
-      <h1>ApplianceFit</h1>
-      <p>Built-In Wall Oven Compatibility Check</p>
+     <h1
+  style={{
+    fontSize: 36,
+    fontWeight: 700,
+    marginBottom: 4,
+    letterSpacing: "-0.02em"
+  }}
+>
+  ApplianceFit
+</h1>
+
+<p style={mutedText}>
+  Built-In Wall Oven Compatibility Check
+</p>
 
       <div style={{ display: "flex", gap: 10 }}>
         <input
