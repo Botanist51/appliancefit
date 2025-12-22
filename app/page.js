@@ -233,31 +233,48 @@ export default function Home() {
   </div>
 ))}
 
-          {result.modifications?.length > 0 && (
-            <>
-              <h3>Required Modifications</h3>
-              <ul>
-                {result.modifications.map((m, i) => (
-                  <li key={i}>{m}</li>
-                ))}
-              </ul>
-            </>
-          )}
+         
 
           {result.sources?.length > 0 && (
-            <>
-              <h3>Sources</h3>
-              <ul>
-                {result.sources.map((s, i) => (
-                  <li key={i}>
-                    <a href={s} target="_blank" rel="noreferrer">
-                      {s}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
+  <div
+    style={{
+      marginTop: 40,
+      padding: 20,
+      borderRadius: 8,
+      border: "1px solid #e5e7eb",
+      background: "#ffffff"
+    }}
+  >
+    <h3 style={{ ...sectionTitle, marginTop: 0 }}>
+      Sources
+    </h3>
+
+    <ul style={{ marginTop: 8, paddingLeft: 18 }}>
+      {result.sources.map((s, i) => (
+        <li
+          key={i}
+          style={{
+            marginBottom: 6,
+            fontSize: 14
+          }}
+        >
+          <a
+            href={s}
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              color: "#2563eb",
+              textDecoration: "underline"
+            }}
+          >
+            {s}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
+
         </>
       )}
     </main>
