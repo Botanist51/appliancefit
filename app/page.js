@@ -71,41 +71,98 @@ export default function Home() {
   Appliance Installation Compatibility Check
 </p>
 
-      <div style={{ display: "flex", gap: 10 }}>
-        <input
-          placeholder="Old model number"
-          value={oldModel}
-          onChange={e => setOldModel(e.target.value)}
-        />
-        <input
-          placeholder="New model number"
-          value={newModel}
-          onChange={e => setNewModel(e.target.value)}
-        />
-        <button onClick={compare}>Compare</button>
-      </div>
+      <div
+  style={{
+    display: "flex",
+    gap: 12,
+    alignItems: "center",
+    marginBottom: 24
+  }}
+>
+  <input
+    placeholder="Existing model number"
+    value={oldModel}
+    onChange={e => setOldModel(e.target.value)}
+    style={{
+      flex: 1,
+      padding: "12px 14px",
+      borderRadius: 6,
+      border: "1px solid #d1d5db",
+      fontSize: 14
+    }}
+  />
+
+  <input
+    placeholder="Replacement model number"
+    value={newModel}
+    onChange={e => setNewModel(e.target.value)}
+    style={{
+      flex: 1,
+      padding: "12px 14px",
+      borderRadius: 6,
+      border: "1px solid #d1d5db",
+      fontSize: 14
+    }}
+  />
+
+  <button
+    onClick={compare}
+    style={{
+      padding: "12px 20px",
+      borderRadius: 6,
+      border: "none",
+      background: "#111827",
+      color: "white",
+      fontSize: 14,
+      fontWeight: 600,
+      cursor: "pointer"
+    }}
+  >
+    Compare
+  </button>
+</div>
 
       {loading && <p>Comparing…</p>}
 
       {result && (
         <>
           <div
-            style={{
-              padding: 15,
-              marginTop: 20,
-              borderRadius: 6,
-              background:
-                result.verdict === "Not Compatible"
-                  ? "#ffe5e5"
-                  : result.verdict === "Modifications Required"
-                  ? "#fff6db"
-                  : "#e6ffed",
-              border: "1px solid #ccc"
-            }}
-          >
-            <h2>{result.verdict}</h2>
-            <p>{result.summary}</p>
-          </div>
+  style={{
+    marginTop: 32,
+    padding: 20,
+    borderRadius: 8,
+    border: "1px solid #e5e7eb",
+    background: "#f9fafb"
+  }}
+>
+  <div
+    style={{
+      fontSize: 12,
+      fontWeight: 600,
+      color: "#6b7280",
+      letterSpacing: "0.08em",
+      textTransform: "uppercase",
+      marginBottom: 6
+    }}
+  >
+    Compatibility Status
+  </div>
+
+  <div
+    style={{
+      fontSize: 24,
+      fontWeight: 700,
+      marginBottom: 4
+    }}
+  >
+    {result.verdict}
+  </div>
+
+  <div style={{ fontSize: 14, color: "#374151" }}>
+    {result.summary}
+  </div>
+</div>
+
 {result.installImpact && (
   <>
     <h3 style={{ marginTop: 30 }}>Install Impact Summary</h3>
@@ -119,7 +176,7 @@ export default function Home() {
 
       {result.charts?.map(chart => (
   <div key={chart.id} style={{ marginTop: 30 }}>
-    <h3>{chart.title}</h3>
+    <h3 style={sectionTitle}>{chart.title}</h3>
 
     <table
       style={{
@@ -183,15 +240,22 @@ export default function Home() {
   );
 }
 const th = {
-  border: "1px solid #ccc",
-  padding: "8px",
-  background: "#f4f4f4",
+  padding: "10px 12px",
+  background: "#f1f5f9",
+  borderBottom: "1px solid #e5e7eb",
+  fontSize: 12,
+  fontWeight: 600,
+  textTransform: "uppercase",
+  letterSpacing: "0.05em",
+  color: "#374151",
   textAlign: "left"
 };
 
 const td = {
-  border: "1px solid #ccc",
-  padding: "8px"
+  padding: "10px 12px",
+  borderBottom: "1px solid #e5e7eb",
+  fontSize: 14,
+  color: "#111827"
 };
 
 export const dynamic = "force-dynamic";
