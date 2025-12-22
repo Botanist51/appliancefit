@@ -59,8 +59,16 @@ export default function Home() {
   ApplianceFit
 </h1>
 
-<p style={mutedText}>
-  Built-In Wall Oven Compatibility Check
+<p
+  style={{
+    fontSize: 16,
+    fontWeight: 500,
+    marginTop: 4,
+    marginBottom: 20,
+    color: "#111827"
+  }}
+>
+  Appliance Installation Compatibility Check
 </p>
 
       <div style={{ display: "flex", gap: 10 }}>
