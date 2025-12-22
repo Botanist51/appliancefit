@@ -36,35 +36,23 @@ const safe = v => (v === undefined || v === null || v === "" ? "N/A" : v);
 
   const mods = [];
   let verdict = "Direct Replacement";
-const costDrivers = [];
-let minCost = 0;
-let maxCost = 0;
 
  if (newOven["Cutout Height Min (in)"] > oldOven["Cutout Height Max (in)"]) {
   verdict = "Not Compatible";
   mods.push("Cabinet cut-out height must be increased.");
 
-  costDrivers.push("Cabinet modification");
-  minCost += 300;
-  maxCost += 900;
 }
 
   if (newOven["Cutout Depth Min (in)"] > oldOven["Cutout Depth Min (in)"]) {
     if (verdict !== "Not Compatible") verdict = "Modifications Required";
    mods.push("Cabinet depth or rear clearance adjustment required.");
 
-costDrivers.push("Cabinet depth adjustment");
-minCost += 200;
-maxCost += 600;
   }
 
   if (newOven["Amperage (A)"] > oldOven["Amperage (A)"]) {
     if (verdict !== "Not Compatible") verdict = "Modifications Required";
    mods.push("Electrical circuit upgrade required.");
 
-costDrivers.push("Electrical upgrade");
-minCost += 400;
-maxCost += 1200;
   }
 const installImpact = [];
 
@@ -109,26 +97,6 @@ return NextResponse.json({
   verdict,
   summary: "Comparison based on manufacturer installation specifications.",
   installImpact,
-costEstimate: {
-  riskLevel:
-    verdict === "Direct Replacement"
-      ? "Low"
-      : verdict === "Modifications Required"
-      ? "Moderate"
-      : "High",
-
-  mostLikelyRange:
-    minCost === 0
-      ? "$0"
-      : `$${Math.round(minCost + (maxCost - minCost) * 0.3)}–$${Math.round(
-          minCost + (maxCost - minCost) * 0.6
-        )}`,
-
-  fullRange:
-    minCost === 0 ? "$0" : `$${minCost}–$${maxCost}`,
-
-  drivers: costDrivers
-},
 
   charts: [
     {
