@@ -46,7 +46,7 @@ export default function Home() {
   };
 
   return (
-    <main style={{ padding: 30, maxWidth: 900, margin: "auto", fontFamily: "Arial" }}>
+    <main style={pageStyle}>
 
       <h1>ApplianceFit</h1>
       <p>Built-In Wall Oven Compatibility Check</p>
