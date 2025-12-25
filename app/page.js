@@ -125,6 +125,44 @@ export default function Home() {
   >
     Compare
   </button>
+
+      <button
+  onClick={async () => {
+    setLoading(true);
+    setResult(null);
+    setImportRow("");
+
+    const r = await fetch("/api/scrape-ajm", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: newModel || oldModel
+      })
+    });
+
+    const j = await r.json();
+    setLoading(false);
+
+    if (!j.ok) {
+      alert(j.error || "Import failed");
+      return;
+    }
+
+    setImportRow(j.tsvRow);
+  }}
+  style={{
+    padding: "12px 20px",
+    borderRadius: 6,
+    border: "1px solid #d1d5db",
+    background: "white",
+    color: "#111827",
+    fontSize: 14,
+    fontWeight: 600,
+    cursor: "pointer"
+  }}
+>
+  Import (AJ Madison)
+</button>
 </div>
 
       {loading && <p>Comparing…</p>}
