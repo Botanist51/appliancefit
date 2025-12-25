@@ -7,6 +7,7 @@ export default function Home() {
   const [newModel, setNewModel] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [importRow, setImportRow] = useState("");
 
   async function compare() {
     setLoading(true);
