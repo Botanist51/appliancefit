@@ -11,6 +11,10 @@ export default function Home() {
   const [importedAppliance, setImportedAppliance] = useState(null);
 
   async function compare() {
+    if (!oldModel && !newModel && !importedAppliance) {
+  alert("Enter or import at least one appliance.");
+  return;
+}
     setLoading(true);
     setResult(null);
 
@@ -130,27 +134,29 @@ export default function Home() {
 
       <button
   onClick={async () => {
-    const r = await fetch("/api/scrape-ajm", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: newModel || oldModel
-      })
-    });
+  setLoading(true);
+  setResult(null);
 
-    const j = await r.json();
+  const r = await fetch("/api/scrape-ajm", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: newModel || oldModel
+    })
+  });
 
-    if (!j.ok) {
-      alert(j.error || "Import failed");
-      return;
-    }
+  const j = await r.json();
+  setLoading(false);
 
-    setImportedAppliance({
-  ...j.appliance,
-  __side: newModel ? "new" : "old"
-});
+  if (!j.ok) {
+    alert(j.error || "Import failed");
+    return;
+  }
 
-  }}
+  // 🔒 For now, imported appliance is ALWAYS the replacement
+  setImportedAppliance(j.appliance);
+}}
+
   style={{
     padding: "12px 20px",
     borderRadius: 6,
