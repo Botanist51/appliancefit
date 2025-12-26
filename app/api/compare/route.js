@@ -15,9 +15,10 @@ export async function POST(req) {
     };
 
     const fmt = n => {
-      if (n === null) return "";
-      return String(Number(n.toFixed(4)));
-    };
+  const numVal = Number(n);
+  if (!Number.isFinite(numVal)) return "";
+  return String(Number(numVal.toFixed(4)));
+};
 
     const safe = v => (v === undefined || v === null || v === "" ? "N/A" : v);
 
