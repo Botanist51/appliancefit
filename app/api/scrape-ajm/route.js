@@ -1,5 +1,7 @@
+export const runtime = "nodejs";
+
 import { NextResponse } from "next/server";
-import * as cheerio from "cheerio";
+const cheerio = require("cheerio");
 
 /**
  * Converts AJ Madison inch strings like:
