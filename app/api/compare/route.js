@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getSheetData } from "../../../lib/sheets";
+import { scrapeAjmModel } from "../../../lib/scrapeAjm";
 
 export async function POST(req) {
   const { oldModel, newModel, importedAppliance } = await req.json();
@@ -40,15 +41,36 @@ if (!newOven && newModel) {
   );
 }
 
-  if (!oldOven || !newOven) {
+  // If not found in sheet, fall back to AJ Madison scrape (Option A)
+let sources = [];
+let scrapeSourceNote = "";
+
+if (!oldOven) {
+  const r = await scrapeAjmModel(oldModel);
+  if (r.ok) {
+    oldOven = r.data;
+    sources.push(r.url);
+    scrapeSourceNote = " (AJ Madison fallback)";
+  }
+}
+
+if (!newOven) {
+  const r = await scrapeAjmModel(newModel);
+  if (r.ok) {
+    newOven = r.data;
+    sources.push(r.url);
+    scrapeSourceNote = " (AJ Madison fallback)";
+  }
+}
+
+if (!oldOven || !newOven) {
   return NextResponse.json({
     verdict: "Insufficient Data",
-    summary:
-      importedAppliance
-        ? "The existing appliance could not be found in the verified dataset."
-        : "One or both model numbers were not found in the verified dataset.",
+    summary: "One or both model numbers were not found in the verified dataset or AJ Madison.",
+    installImpact: [],
+    charts: [],
     modifications: [],
-    sources: []
+    sources: sources
   });
 }
 
@@ -281,10 +303,11 @@ return NextResponse.json({
     }
   ],
 
-  modifications: mods,
-  sources: [
+ modifications: mods,
+sources: [
   safe(oldOven["Spec Source URL"]),
-  importedAppliance ? safe(importedAppliance["Spec Source URL"]) : safe(newOven["Spec Source URL"])
-]
+  safe(newOven["Spec Source URL"]),
+  ...sources
+].filter(s => s && s !== "N/A")
 });
 }
