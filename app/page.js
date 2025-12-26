@@ -145,7 +145,11 @@ export default function Home() {
       return;
     }
 
-    setImportedAppliance(j.appliance);
+    setImportedAppliance({
+  ...j.appliance,
+  __side: newModel ? "new" : "old"
+});
+
   }}
   style={{
     padding: "12px 20px",
