@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getSheetData } from "../../../lib/sheets";
 
 export async function POST(req) {
-  const { oldModel, newModel } = await req.json();
+  const { oldModel, newModel, importedAppliance } = await req.json();
 
   const data = await getSheetData();
 
@@ -18,21 +18,39 @@ const fmt = n => {
 };
 const safe = v => (v === undefined || v === null || v === "" ? "N/A" : v);
 
-  const oldOven = data.find(
+  let oldOven = null;
+let newOven = null;
+
+// 1. If AJ Madison import exists, use it as the NEW appliance
+if (importedAppliance) {
+  newOven = importedAppliance;
+}
+
+// 2. Always try to resolve the OLD appliance from the sheet
+if (oldModel) {
+  oldOven = data.find(
     r => normalize(r["Model Number"]) === normalize(oldModel)
   );
-  const newOven = data.find(
+}
+
+// 3. If no import was used, resolve NEW appliance from sheet
+if (!newOven && newModel) {
+  newOven = data.find(
     r => normalize(r["Model Number"]) === normalize(newModel)
   );
+}
 
   if (!oldOven || !newOven) {
-    return NextResponse.json({
-      verdict: "Insufficient Data",
-      summary: "One or both model numbers were not found in the verified dataset.",
-      modifications: [],
-      sources: []
-    });
-  }
+  return NextResponse.json({
+    verdict: "Insufficient Data",
+    summary:
+      importedAppliance
+        ? "The existing appliance could not be found in the verified dataset."
+        : "One or both model numbers were not found in the verified dataset.",
+    modifications: [],
+    sources: []
+  });
+}
 
   const mods = [];
   let verdict = "Direct Replacement";
@@ -265,8 +283,8 @@ return NextResponse.json({
 
   modifications: mods,
   sources: [
-    safe(oldOven["Spec Source URL"]),
-    safe(newOven["Spec Source URL"])
-  ]
+  safe(oldOven["Spec Source URL"]),
+  importedAppliance ? safe(importedAppliance["Spec Source URL"]) : safe(newOven["Spec Source URL"])
+]
 });
 }
