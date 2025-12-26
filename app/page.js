@@ -164,6 +164,49 @@ export default function Home() {
   Import (AJ Madison)
 </button>
 </div>
+{importRow && (
+  <div
+    style={{
+      marginTop: 20,
+      padding: 16,
+      borderRadius: 8,
+      border: "1px solid #e5e7eb",
+      background: "#f8fafc"
+    }}
+  >
+    <div
+      style={{
+        fontSize: 12,
+        fontWeight: 700,
+        letterSpacing: "0.08em",
+        textTransform: "uppercase",
+        color: "#6b7280",
+        marginBottom: 8
+      }}
+    >
+      AJ Madison Import (TSV)
+    </div>
+
+    <textarea
+      readOnly
+      value={importRow}
+      style={{
+        width: "100%",
+        minHeight: 120,
+        fontFamily: "monospace",
+        fontSize: 13,
+        padding: 10,
+        borderRadius: 6,
+        border: "1px solid #d1d5db",
+        background: "white"
+      }}
+    />
+
+    <div style={{ marginTop: 6, fontSize: 12, color: "#6b7280" }}>
+      Copy and paste this row directly into your spreadsheet.
+    </div>
+  </div>
+)}
 
       {loading && <p>Comparing…</p>}
 
