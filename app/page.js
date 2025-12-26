@@ -8,6 +8,7 @@ export default function Home() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [importRow, setImportRow] = useState("");
+  const [importedAppliance, setImportedAppliance] = useState(null);
 
   async function compare() {
     setLoading(true);
@@ -18,7 +19,8 @@ export default function Home() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         oldModel,
-        newModel
+        newModel,
+        importedAppliance
       })
     });
 
@@ -149,6 +151,8 @@ export default function Home() {
     }
 
     setImportRow(j.tsvRow);
+    setImportedAppliance(j.data);
+
   }}
   style={{
     padding: "12px 20px",
