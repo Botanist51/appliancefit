@@ -22,10 +22,15 @@ const safe = v => (v === undefined || v === null || v === "" ? "N/A" : v);
   let oldOven = null;
 let newOven = null;
 
-// 1. If AJ Madison import exists, use it as the NEW appliance
-if (importedAppliance) {
+// 1. If AJ Madison import exists, assign it to the correct side
+if (importedAppliance?.__side === "new") {
   newOven = importedAppliance;
 }
+
+if (importedAppliance?.__side === "old") {
+  oldOven = importedAppliance;
+}
+
 
 // 2. Always try to resolve the OLD appliance from the sheet
 if (oldModel) {
@@ -77,19 +82,28 @@ if (!oldOven || !newOven) {
   const mods = [];
   let verdict = "Direct Replacement";
 
- if (newOven["Cutout Height Min (in)"] > oldOven["Cutout Height Max (in)"]) {
+ if (
+  num(newOven["Cutout Height Min (in)"]) >
+  num(oldOven["Cutout Height Max (in)"])
+) {
   verdict = "Not Compatible";
   mods.push("Cabinet cut-out height must be increased.");
 
 }
 
-  if (newOven["Cutout Depth Min (in)"] > oldOven["Cutout Depth Min (in)"]) {
+  if (
+  num(newOven["Cutout Depth Min (in)"]) >
+  num(oldOven["Cutout Depth Min (in)"])
+) {
     if (verdict !== "Not Compatible") verdict = "Modifications Required";
    mods.push("Cabinet depth or rear clearance adjustment required.");
 
   }
 
-  if (newOven["Amperage (A)"] > oldOven["Amperage (A)"]) {
+  if (
+  num(newOven["Amperage (A)"]) >
+  num(oldOven["Amperage (A)"])
+) {
     if (verdict !== "Not Compatible") verdict = "Modifications Required";
    mods.push("Electrical circuit upgrade required.");
 
@@ -98,20 +112,26 @@ const installImpact = [];
 
 // --- Cut-out impacts ---
 const heightDelta =
-  num(newOven["Cutout Height Min (in)"]) -
-  num(oldOven["Cutout Height Max (in)"]);
+  num(newOven["Cutout Height Min (in)"]) !== null &&
+  num(oldOven["Cutout Height Max (in)"]) !== null
+    ? num(newOven["Cutout Height Min (in)"]) -
+      num(oldOven["Cutout Height Max (in)"])
+    : null;
 
-if (heightDelta > 0) {
+if (heightDelta !== null && heightDelta > 0) {
   installImpact.push(
     `Cabinet opening height must be increased by ${fmt(heightDelta)} in.`
   );
 }
 
 const depthDelta =
-  num(newOven["Cutout Depth Min (in)"]) -
-  num(oldOven["Cutout Depth Min (in)"]);
+  num(newOven["Cutout Depth Min (in)"]) !== null &&
+  num(oldOven["Cutout Depth Min (in)"]) !== null
+    ? num(newOven["Cutout Depth Min (in)"]) -
+      num(oldOven["Cutout Depth Min (in)"])
+    : null;
 
-if (depthDelta > 0) {
+if (depthDelta !== null && depthDelta > 0) {
   installImpact.push(
     `Cabinet depth or rear clearance must be increased by ${fmt(depthDelta)} in.`
   );
@@ -119,10 +139,13 @@ if (depthDelta > 0) {
 
 // --- Electrical impacts ---
 const ampDelta =
-  num(newOven["Amperage (A)"]) -
-  num(oldOven["Amperage (A)"]);
+  num(newOven["Amperage (A)"]) !== null &&
+  num(oldOven["Amperage (A)"]) !== null
+    ? num(newOven["Amperage (A)"]) -
+      num(oldOven["Amperage (A)"])
+    : null;
 
-if (ampDelta > 0) {
+if (ampDelta !== null && ampDelta > 0) {
   installImpact.push(
     `Electrical service must be upgraded from ${oldOven["Amperage (A)"]}A to ${newOven["Amperage (A)"]}A.`
   );
