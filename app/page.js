@@ -279,6 +279,43 @@ export default function Home() {
   </div>
 ))}
 
+{result.installDoc && (
+  <div
+    style={{
+      marginTop: 40,
+      padding: 20,
+      borderRadius: 8,
+      border: "1px solid #e5e7eb",
+      background: "#ffffff"
+    }}
+  >
+    <h3 style={{ ...sectionTitle, marginTop: 0 }}>
+      Installation Diagram
+    </h3>
+
+    <p style={{ fontSize: 14, color: "#374151", marginBottom: 10 }}>
+      {result.installDoc.title}
+    </p>
+
+    <a
+      href={result.installDoc.url}
+      target="_blank"
+      rel="noreferrer"
+      style={{
+        display: "inline-block",
+        padding: "10px 14px",
+        borderRadius: 6,
+        background: "#111827",
+        color: "white",
+        fontSize: 14,
+        fontWeight: 600,
+        textDecoration: "none"
+      }}
+    >
+      Open Diagram PDF
+    </a>
+  </div>
+)}
 
           {result.sources?.length > 0 && (
   <div
