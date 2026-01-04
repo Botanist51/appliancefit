@@ -22,11 +22,13 @@ export async function POST(req) {
     }
 
     return NextResponse.json({
-      ok: true,
-      source: "AJ Madison",
-      url: r.url,
-      appliance: r.data
-    });
+  ok: true,
+  source: "AJ Madison",
+  url: r.url,
+  appliance: r.data,
+  manuals: r.data?.Manuals || null
+});
+
   } catch (err) {
     return NextResponse.json(
       { ok: false, error: String(err?.message || err) },
