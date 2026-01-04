@@ -25,8 +25,7 @@ export async function POST(req) {
   ok: true,
   source: "AJ Madison",
   url: r.url,
-  appliance: r.data,
-  manuals: r.data?.Manuals || null
+  appliance: r.data
 });
 
   } catch (err) {
