@@ -279,7 +279,7 @@ export default function Home() {
   </div>
 ))}
 
-{result.installDoc && (
+{result.manuals && (result.manuals.old || result.manuals.new) && (
   <div
     style={{
       marginTop: 40,
@@ -290,30 +290,49 @@ export default function Home() {
     }}
   >
     <h3 style={{ ...sectionTitle, marginTop: 0 }}>
-      Installation Diagram
+      Installation Diagrams & Guides
     </h3>
 
-    <p style={{ fontSize: 14, color: "#374151", marginBottom: 10 }}>
-      {result.installDoc.title}
-    </p>
+    {["old", "new"].map(key => {
+      const m = result.manuals[key];
+      if (!m) return null;
 
-    <a
-      href={result.installDoc.url}
-      target="_blank"
-      rel="noreferrer"
-      style={{
-        display: "inline-block",
-        padding: "10px 14px",
-        borderRadius: 6,
-        background: "#111827",
-        color: "white",
-        fontSize: 14,
-        fontWeight: 600,
-        textDecoration: "none"
-      }}
-    >
-      Open Diagram PDF
-    </a>
+      return (
+        <div key={key} style={{ marginTop: 12 }}>
+          <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 6 }}>
+            {key === "old" ? "Existing Appliance" : "Replacement Appliance"}
+          </div>
+
+          <ul style={{ paddingLeft: 18 }}>
+            {m.specification && (
+              <li style={{ marginBottom: 6 }}>
+                <a
+                  href={m.specification.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ color: "#2563eb", textDecoration: "underline" }}
+                >
+                  {m.specification.title}
+                </a>
+              </li>
+            )}
+
+            {!m.specification && m.installation && (
+              <li style={{ marginBottom: 6 }}>
+                <a
+                  href={m.installation.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ color: "#2563eb", textDecoration: "underline" }}
+                >
+                  {m.installation.title}
+                </a>
+              </li>
+            )}
+          </ul>
+        </div>
+      );
+    })}
   </div>
 )}
 
