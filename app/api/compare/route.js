@@ -69,6 +69,12 @@ export async function POST(req) {
       });
     }
 
+    // 🔧 Extract manuals for UI (installer diagrams)
+const manuals = {
+  old: oldOven?.Manuals || null,
+  new: newOven?.Manuals || null
+};
+
     const mods = [];
     let verdict = "Direct Replacement";
 
@@ -204,7 +210,7 @@ export async function POST(req) {
           ]
         }
       ],
-
+      manuals,
       sources: [
         safe(oldOven["Spec Source URL"]),
         safe(newOven["Spec Source URL"]),
