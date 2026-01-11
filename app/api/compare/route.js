@@ -10,9 +10,12 @@ export async function POST(req) {
 
     const normalize = v => String(v || "").trim().toUpperCase();
     const num = v => {
-      const n = Number(v);
-      return Number.isFinite(n) ? n : null;
-    };
+  if (v === undefined || v === null) return null;
+  const s = String(v).trim();
+  if (!s || s.toUpperCase() === "N/A") return null;
+  const n = Number(s);
+  return Number.isFinite(n) ? n : null;
+};
 
     const fmt = n => {
   const numVal = Number(n);
@@ -167,39 +170,33 @@ const manuals = {
   rows: [
     {
       label: "Width (in)",
-      old: fmt(oldOven["Overall Width (in)"]),
-      new: fmt(newOven["Overall Width (in)"]),
-      diff:
-        oldOven["Overall Width (in)"] && newOven["Overall Width (in)"]
-          ? fmt(
-              num(newOven["Overall Width (in)"]) -
-              num(oldOven["Overall Width (in)"])
-            )
-          : "N/A"
+      old: safe(oldOven["Overall Width (in)"]),
+      new: safe(newOven["Overall Width (in)"]),
+      diff: (() => {
+        const o = num(oldOven["Overall Width (in)"]);
+        const n = num(newOven["Overall Width (in)"]);
+        return o !== null && n !== null ? fmt(n - o) : "N/A";
+      })()
     },
     {
       label: "Height (in)",
-      old: fmt(oldOven["Overall Height (in)"]),
-      new: fmt(newOven["Overall Height (in)"]),
-      diff:
-        oldOven["Overall Height (in)"] && newOven["Overall Height (in)"]
-          ? fmt(
-              num(newOven["Overall Height (in)"]) -
-              num(oldOven["Overall Height (in)"])
-            )
-          : "N/A"
+      old: safe(oldOven["Overall Height (in)"]),
+      new: safe(newOven["Overall Height (in)"]),
+      diff: (() => {
+        const o = num(oldOven["Overall Height (in)"]);
+        const n = num(newOven["Overall Height (in)"]);
+        return o !== null && n !== null ? fmt(n - o) : "N/A";
+      })()
     },
     {
       label: "Depth (in)",
-      old: fmt(oldOven["Overall Depth (in)"]),
-      new: fmt(newOven["Overall Depth (in)"]),
-      diff:
-        oldOven["Overall Depth (in)"] && newOven["Overall Depth (in)"]
-          ? fmt(
-              num(newOven["Overall Depth (in)"]) -
-              num(oldOven["Overall Depth (in)"])
-            )
-          : "N/A"
+      old: safe(oldOven["Overall Depth (in)"]),
+      new: safe(newOven["Overall Depth (in)"]),
+      diff: (() => {
+        const o = num(oldOven["Overall Depth (in)"]);
+        const n = num(newOven["Overall Depth (in)"]);
+        return o !== null && n !== null ? fmt(n - o) : "N/A";
+      })()
     }
   ]
 },
