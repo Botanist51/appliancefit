@@ -160,6 +160,49 @@ const manuals = {
             }
           ]
         },
+        
+{
+  id: "overall",
+  title: "Overall (Product) Dimensions",
+  rows: [
+    {
+      label: "Width (in)",
+      old: fmt(oldOven["Overall Width (in)"]),
+      new: fmt(newOven["Overall Width (in)"]),
+      diff:
+        oldOven["Overall Width (in)"] && newOven["Overall Width (in)"]
+          ? fmt(
+              num(newOven["Overall Width (in)"]) -
+              num(oldOven["Overall Width (in)"])
+            )
+          : "N/A"
+    },
+    {
+      label: "Height (in)",
+      old: fmt(oldOven["Overall Height (in)"]),
+      new: fmt(newOven["Overall Height (in)"]),
+      diff:
+        oldOven["Overall Height (in)"] && newOven["Overall Height (in)"]
+          ? fmt(
+              num(newOven["Overall Height (in)"]) -
+              num(oldOven["Overall Height (in)"])
+            )
+          : "N/A"
+    },
+    {
+      label: "Depth (in)",
+      old: fmt(oldOven["Overall Depth (in)"]),
+      new: fmt(newOven["Overall Depth (in)"]),
+      diff:
+        oldOven["Overall Depth (in)"] && newOven["Overall Depth (in)"]
+          ? fmt(
+              num(newOven["Overall Depth (in)"]) -
+              num(oldOven["Overall Depth (in)"])
+            )
+          : "N/A"
+    }
+  ]
+},
 
         {
           id: "electrical",
