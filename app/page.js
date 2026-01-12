@@ -58,13 +58,14 @@ export default function Home() {
 
   const sectionTitle = {
   marginTop: 48,
-  marginBottom: 14,
-  fontSize: 16,
-  fontWeight: 700,
-  letterSpacing: "0.04em",
+  marginBottom: 16,
+  fontSize: 18,
+  fontWeight: 800,
+  letterSpacing: "0.06em",
   textTransform: "uppercase",
   color: "#374151"
 };
+
 
   const mutedText = {
     color: "#6b7280",
