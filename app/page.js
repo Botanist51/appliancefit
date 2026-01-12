@@ -311,46 +311,32 @@ export default function Home() {
       Installation Diagrams & Guides
     </h3>
 
-    {["old", "new"].map(key => {
-      const m = result.manuals[key];
-      if (!m) return null;
+    <div style={guideRow}>
+  {["old", "new"].map(key => {
+    const m = result.manuals[key];
+    if (!m) return null;
 
-      return (
-        <div key={key} style={{ marginTop: 12 }}>
-          <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 6 }}>
-            {key === "old" ? "Existing Appliance" : "Replacement Appliance"}
-          </div>
+    const doc = m.specification || m.installation;
+    if (!doc) return null;
 
-          <ul style={{ paddingLeft: 18 }}>
-            {m.specification && (
-              <li style={{ marginBottom: 6 }}>
-                <a
-                  href={m.specification.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{ color: "#2563eb", textDecoration: "underline" }}
-                >
-                  {m.specification.title}
-                </a>
-              </li>
-            )}
-
-            {!m.specification && m.installation && (
-              <li style={{ marginBottom: 6 }}>
-                <a
-                  href={m.installation.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{ color: "#2563eb", textDecoration: "underline" }}
-                >
-                  {m.installation.title}
-                </a>
-              </li>
-            )}
-          </ul>
+    return (
+      <div key={key} style={guideColumn}>
+        <div style={guideLabel}>
+          {key === "old" ? "Existing Appliance" : "Replacement Appliance"}
         </div>
-      );
-    })}
+
+        <a
+          href={doc.url}
+          target="_blank"
+          rel="noreferrer"
+          style={guideLink}
+        >
+          {doc.title}
+        </a>
+      </div>
+    );
+  })}
+</div>
   </div>
 )}
 
@@ -399,6 +385,37 @@ export default function Home() {
     </main>
   );
 }
+const guideRow = {
+  display: "flex",
+  gap: 32,
+  marginTop: 16
+};
+
+const guideColumn = {
+  flex: 1
+};
+
+const guideLabel = {
+  fontSize: 12,
+  fontWeight: 700,
+  letterSpacing: "0.08em",
+  textTransform: "uppercase",
+  color: "#6b7280",
+  marginBottom: 10
+};
+
+const guideLink = {
+  display: "block",
+  padding: "12px 14px",
+  borderRadius: 8,
+  border: "1px solid #e5e7eb",
+  background: "#f9fafb",
+  color: "#111827",
+  fontSize: 14,
+  fontWeight: 600,
+  textDecoration: "none"
+};
+
 const th = {
   padding: "10px 12px",
   background: "#f1f5f9",
