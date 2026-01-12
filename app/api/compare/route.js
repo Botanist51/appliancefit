@@ -205,7 +205,15 @@ const manuals = {
           id: "electrical",
           title: "Electrical",
           rows: [
-            { label: "Voltage", old: safe(oldOven["Voltage"]), new: safe(newOven["Voltage"]), diff: "N/A" },
+            {
+  label: "Voltage",
+  old: safe(oldOven["Voltage"]),
+  new: safe(newOven["Voltage"]),
+  diff:
+    oldOven["Voltage"] && newOven["Voltage"]
+      ? fmt(num(newOven["Voltage"]) - num(oldOven["Voltage"]))
+      : "N/A"
+},
             {
               label: "Amperage (A)",
               old: safe(oldOven["Amperage (A)"]),
