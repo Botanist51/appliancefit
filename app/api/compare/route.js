@@ -241,16 +241,29 @@ if (widthDelta > 0) {
         },
 
         {
-          id: "ventilation",
-          title: "Ventilation",
-          rows: [
-            { label: "Ventilation Type", old: safe(oldOven["Ventilation Type"]), new: safe(newOven["Ventilation Type"]), diff: "N/A" },
-            { label: "Minimum CFM", old: safe(oldOven["Ventilation Min CFM"]), new: safe(newOven["Ventilation Min CFM"]), diff: "N/A" },
-            { label: "Recommended CFM", old: safe(oldOven["Ventilation Recommended CFM"]), new: safe(newOven["Ventilation Recommended CFM"]), diff: "N/A" },
-            { label: "Duct Diameter (in)", old: safe(oldOven["Ventilation Duct Diameter (in)"]), new: safe(newOven["Ventilation Duct Diameter (in)"]), diff: "N/A" },
-            { label: "Recirculating Allowed", old: safe(oldOven["Ventilation Recirculating Allowed"]), new: safe(newOven["Ventilation Recirculating Allowed"]), diff: "N/A" }
-          ]
-        },
+  id: "ventilation",
+  title: "Ventilation",
+  rows: [
+    {
+      label: "Ventilation Type",
+      old: safe(oldOven["Ventilation Type"]),
+      new: safe(newOven["Ventilation Type"]),
+      diff: "N/A"
+    },
+    {
+      label: "CFM",
+      old: safe(oldOven["Ventilation Recommended CFM"]),
+      new: safe(newOven["Ventilation Recommended CFM"]),
+      diff: "N/A"
+    },
+    {
+      label: "Recirculating Allowed",
+      old: safe(oldOven["Ventilation Recirculating Allowed"]),
+      new: safe(newOven["Ventilation Recirculating Allowed"]),
+      diff: "N/A"
+    }
+  ]
+}
 
         {
           id: "gas",
