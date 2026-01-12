@@ -76,11 +76,12 @@ export default function Home() {
 
     <h1
   style={{
-    fontSize: 42,
-    fontWeight: 900,
-    marginBottom: 2,
-    letterSpacing: "-0.04em",
-    color: "#0f172a"
+    fontSize: 56,
+    fontWeight: 950,
+    marginBottom: 0,
+    letterSpacing: "-0.05em",
+    lineHeight: "1",
+    color: "#020617"
   }}
 >
   ApplianceFit
@@ -88,8 +89,8 @@ export default function Home() {
 
 <p
   style={{
-    fontSize: 15,
-    fontWeight: 500,
+    fontSize: 20,
+    fontWeight: 550,
     marginTop: 4,
     marginBottom: 28,
   color: "#4b5563"
