@@ -184,7 +184,7 @@ export default function Home() {
     cursor: "pointer"
   }}
 >
-  Import (AJ Madison)
+  Import
 </button>
 </div>
 
