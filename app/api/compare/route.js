@@ -81,6 +81,15 @@ const manuals = {
     const mods = [];
     let verdict = "Direct Replacement";
 
+    // ❗ CUTOUT WIDTH is a hard physical constraint
+const widthDelta =
+  num(newOven["Cutout Width Min (in)"]) - num(oldOven["Cutout Width Min (in)"]);
+
+if (widthDelta > 0) {
+  verdict = "Modifications Required";
+  mods.push(`Cabinet opening width must be increased by ${fmt(widthDelta)} in.`);
+}
+
     if (newOven["Cutout Height Min (in)"] > oldOven["Cutout Height Max (in)"]) {
       verdict = "Not Compatible";
       mods.push("Cabinet cut-out height must be increased.");
