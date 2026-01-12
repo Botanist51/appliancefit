@@ -2,6 +2,22 @@
 
 import { useState } from "react";
 
+function formatRange(v) {
+  if (!v) return v;
+
+  // Matches: "28.5 to 28.5", "24 to 24", "28.625 to 28.625"
+  const m = String(v).match(/^([\d.]+)\s+to\s+([\d.]+)$/);
+  if (!m) return v;
+
+  const a = m[1];
+  const b = m[2];
+
+  // If min === max → show only one number
+  if (a === b) return a;
+
+  return v;
+}
+
 export default function Home() {
   const [oldModel, setOldModel] = useState("");
   const [newModel, setNewModel] = useState("");
@@ -267,8 +283,8 @@ export default function Home() {
         {chart.rows.map(row => (
           <tr key={row.label}>
             <td style={td}>{row.label}</td>
-            <td style={td}>{row.old}</td>
-            <td style={td}>{row.new}</td>
+            <td style={td}>{formatRange(row.old)}</td>
+            <td style={td}>{formatRange(row.new)}</td>
             <td style={td}>
               {row.diff !== "" ? `${row.diff}` : "N/A"}
             </td>
