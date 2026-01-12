@@ -270,7 +270,6 @@ if (widthDelta > 0) {
           title: "Gas",
           rows: [
             { label: "Gas Type", old: safe(oldOven["Gas Type"]), new: safe(newOven["Gas Type"]), diff: "N/A" },
-            { label: "Gas Supply Pressure", old: safe(oldOven["Gas Supply Pressure"]), new: safe(newOven["Gas Supply Pressure"]), diff: "N/A" },
             { label: "Gas Connection Size", old: safe(oldOven["Gas Connection Size"]), new: safe(newOven["Gas Connection Size"]), diff: "N/A" }
           ]
         },
