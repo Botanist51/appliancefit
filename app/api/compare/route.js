@@ -263,7 +263,7 @@ if (widthDelta > 0) {
       diff: "N/A"
     }
   ]
-}
+},
 
         {
           id: "gas",
