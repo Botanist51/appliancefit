@@ -81,11 +81,7 @@ const manuals = {
     const mods = [];
     let verdict = "Direct Replacement";
 
-    // ❗ CUTOUT WIDTH is a hard physical constraint
-const widthDelta =
-  num(newOven["Cutout Width Min (in)"]) - num(oldOven["Cutout Width Min (in)"]);
-
-if (widthDelta > 0) {
+    if (widthDelta > 0) {
   verdict = "Modifications Required";
   mods.push(`Cabinet opening width must be increased by ${fmt(widthDelta)} in.`);
 }
