@@ -81,6 +81,11 @@ const manuals = {
     const mods = [];
     let verdict = "Direct Replacement";
 
+    if (num(newOven["Cutout Width Min (in)"]) > num(oldOven["Cutout Width Min (in)"])) {
+  verdict = "Modifications Required";
+  mods.push("Cabinet cut-out width must be increased.");
+}
+
     if (newOven["Cutout Height Min (in)"] > oldOven["Cutout Height Max (in)"]) {
       verdict = "Not Compatible";
       mods.push("Cabinet cut-out height must be increased.");
