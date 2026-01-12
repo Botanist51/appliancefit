@@ -104,6 +104,15 @@ const manuals = {
       installImpact.push(`Cabinet opening height must be increased by ${fmt(heightDelta)} in.`);
     }
 
+    const widthDelta =
+  num(newOven["Cutout Width Min (in)"]) - num(oldOven["Cutout Width Max (in)"]);
+
+if (widthDelta > 0) {
+  installImpact.push(
+    `Cabinet opening width must be increased by ${fmt(widthDelta)} in.`
+  );
+}
+
     const depthDelta =
       num(newOven["Cutout Depth Min (in)"]) - num(oldOven["Cutout Depth Min (in)"]);
     if (depthDelta > 0) {
