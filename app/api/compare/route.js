@@ -33,34 +33,25 @@ export async function POST(req) {
       newOven = importedAppliance;
     }
 
-    // Resolve OLD from sheet if provided
-    if (oldModel) {
-      oldOven = data.find(r => normalize(r["Model Number"]) === normalize(oldModel));
-    }
+// Scrape both models so BOTH sides come from the same source.
+// Imported appliance (if provided) still overrides the NEW side.
+const scrapeSources = [];
 
-    // Resolve NEW from sheet if no import
-    if (!newOven && newModel) {
-      newOven = data.find(r => normalize(r["Model Number"]) === normalize(newModel));
-    }
+if (oldModel) {
+  const r = await scrapeAjmModel(oldModel);
+  if (r?.ok) {
+    oldOven = r.data;
+    scrapeSources.push(r.url);
+  }
+}
 
-    // Fallback scraping (ONLY if model exists and still not found)
-    const scrapeSources = [];
-
-    if (!oldOven && oldModel) {
-      const r = await scrapeAjmModel(oldModel);
-      if (r?.ok) {
-        oldOven = r.data;
-        scrapeSources.push(r.url);
-      }
-    }
-
-    if (!newOven && newModel) {
-      const r = await scrapeAjmModel(newModel);
-      if (r?.ok) {
-        newOven = r.data;
-        scrapeSources.push(r.url);
-      }
-    }
+if (!newOven && newModel) {
+  const r = await scrapeAjmModel(newModel);
+  if (r?.ok) {
+    newOven = r.data;
+    scrapeSources.push(r.url);
+  }
+}
 
     if (!oldOven || !newOven) {
       return NextResponse.json({
@@ -223,10 +214,12 @@ if (widthDelta > 0) {
   label: "Voltage",
   old: safe(oldOven["Voltage"]),
   new: safe(newOven["Voltage"]),
-  diff:
-    oldOven["Voltage"] && newOven["Voltage"]
-      ? fmt(num(newOven["Voltage"]) - num(oldOven["Voltage"]))
-      : "N/A"
+  diff: (() => {
+  const o = num(oldOven["Voltage"]);
+  const n = num(newOven["Voltage"]);
+  return o !== null && n !== null ? fmt(n - o) : "N/A";
+})()
+
 },
             {
               label: "Amperage (A)",
